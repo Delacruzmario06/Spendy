@@ -8,9 +8,15 @@ import Dashboard from './Components/Dashboard/Dashboard';
 import Income from './Components/Income/Income'
 import Expenses from './Components/Expenses/Expenses';
 import { useGlobalContext } from './context/globalContext';
+import SignIn from './Components/SignIn/SignIn';
+import SignUp from './Components/SignUp/SignUp';
+
+
+
 
 function App() {
-  const [active, setActive] = useState(1)
+  const [active, setActive] = useState(5)
+  const sign=active==5 || active==6
 
   const global = useGlobalContext()
   console.log(global);
@@ -25,8 +31,13 @@ function App() {
         return <Income />
       case 4: 
         return <Expenses />
+      case 5:
+        return <SignIn active={active} setActive={setActive} />
+      case 6: 
+        return <SignUp active={active} setActive={setActive}/>
       default: 
         return <Dashboard />
+
     }
   }
 
@@ -38,10 +49,12 @@ function App() {
     <AppStyled bg={bg} className="App">
       {orbMemo}
       <MainLayout>
+        {!sign?
+        <>
         <Navigation active={active} setActive={setActive} />
         <main>
           {displayData()}
-        </main>
+        </main></>: displayData()}
       </MainLayout>
     </AppStyled>
   );
